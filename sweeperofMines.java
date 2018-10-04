@@ -27,6 +27,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.beans.EventHandler;
 import java.io.*;
 import java.util.*;
@@ -40,12 +42,44 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class sweeperofMines extends Application
 {
 	@Override
 	public void start(Stage stage) throws IOException
-	{		
+	{
+/*		BufferedImage img = ImageIO.read(new File("C:\\Users\\khscs091\\Downloads\\images.GIF"));
+		
+		BufferedImage flag = img.getSubimage(115, 235, 580, 202);
+		BufferedImage questionMark = img.getSubimage(115, 235, 580, 202);
+		BufferedImage exclamationPoint = img.getSubimage(115, 235, 580, 202);
+		
+		BufferedImage one = img.getSubimage(115, 235, 580, 202);
+		BufferedImage two = img.getSubimage(115, 235, 580, 202);
+		BufferedImage three = img.getSubimage(115, 235, 580, 202);
+		BufferedImage four = img.getSubimage(115, 235, 580, 202);
+		BufferedImage five = img.getSubimage(115, 235, 580, 202);
+		BufferedImage six = img.getSubimage(115, 235, 580, 202);
+		BufferedImage seven = img.getSubimage(115, 235, 580, 202);
+		BufferedImage eight = img.getSubimage(115, 235, 580, 202);
+		
+		BufferedImage revealedGray = img.getSubimage(115, 235, 580, 202);
+		BufferedImage nonrevealedGray = img.getSubimage(115, 235, 580, 202);
+		
+		BufferedImage bomb = img.getSubimage(115, 235, 580, 202);
+		BufferedImage discoveredBomb = img.getSubimage(115, 235, 580, 202);
+		
+		BufferedImage neutral = img.getSubimage(115, 235, 580, 202);
+		BufferedImage win = img.getSubimage(115, 235, 580, 202);
+		BufferedImage lose = img.getSubimage(115, 235, 580, 202); */
+		
+		
+		
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
@@ -56,6 +90,12 @@ public class sweeperofMines extends Application
 			for(int k = 0;k<16;k++)
 			{
 				Button b1 = new Button("   ");
+				
+				b1.setOnAction(event -> 
+				{
+		            
+		        });
+				
 				gridButtons[i][k] = b1;
 			}
 		}
@@ -102,5 +142,10 @@ public class sweeperofMines extends Application
 	{
 		launch(args);
 	}
+	
+/*	public void placeBombs(Button[][] b)
+	{
+		
+	} */
 	
 }
