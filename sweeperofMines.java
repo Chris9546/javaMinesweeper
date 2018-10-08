@@ -3,6 +3,7 @@ package School;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -28,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.beans.EventHandler;
 import java.io.*;
@@ -38,9 +41,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -53,48 +59,29 @@ public class sweeperofMines extends Application
 	@Override
 	public void start(Stage stage) throws IOException
 	{
-/*		BufferedImage img = ImageIO.read(new File("C:\\Users\\khscs091\\Downloads\\images.GIF"));
+		ImageView flagView = new ImageView("C:\\Users\\khscs091\\flag.png");
+		flagView.setPickOnBounds(true);
 		
-		BufferedImage flag = img.getSubimage(115, 235, 580, 202);
-		BufferedImage questionMark = img.getSubimage(115, 235, 580, 202);
-		BufferedImage exclamationPoint = img.getSubimage(115, 235, 580, 202);
-		
-		BufferedImage one = img.getSubimage(115, 235, 580, 202);
-		BufferedImage two = img.getSubimage(115, 235, 580, 202);
-		BufferedImage three = img.getSubimage(115, 235, 580, 202);
-		BufferedImage four = img.getSubimage(115, 235, 580, 202);
-		BufferedImage five = img.getSubimage(115, 235, 580, 202);
-		BufferedImage six = img.getSubimage(115, 235, 580, 202);
-		BufferedImage seven = img.getSubimage(115, 235, 580, 202);
-		BufferedImage eight = img.getSubimage(115, 235, 580, 202);
-		
-		BufferedImage revealedGray = img.getSubimage(115, 235, 580, 202);
-		BufferedImage nonrevealedGray = img.getSubimage(115, 235, 580, 202);
-		
-		BufferedImage bomb = img.getSubimage(115, 235, 580, 202);
-		BufferedImage discoveredBomb = img.getSubimage(115, 235, 580, 202);
-		
-		BufferedImage neutral = img.getSubimage(115, 235, 580, 202);
-		BufferedImage win = img.getSubimage(115, 235, 580, 202);
-		BufferedImage lose = img.getSubimage(115, 235, 580, 202); */
-		
-		
+		ImageView empty = new ImageView("");
+		ImageView covered = new ImageView("");
+		ImageView bomb = new ImageView("");
 		
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
-		Button[][] gridButtons = new Button[16][16];
+		ImageView[][] gridButtons = new ImageView[16][16];
 		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				Button b1 = new Button("   ");
+				ImageView b1 = flagView;
 				
-				b1.setOnAction(event -> 
+				b1.setOnMouseClicked((MouseEvent e) -> 
 				{
-		            
+		            System.out.println("Clicked!");
 		        });
+				
 				
 				gridButtons[i][k] = b1;
 			}
@@ -122,8 +109,7 @@ public class sweeperofMines extends Application
 		minesLeft.setFocusTraversable(false);
 		minesLeft.setVisible(true);
 		
-		
-		Group root = new Group(grid, minesLeft);
+		Group root = new Group();
 		
 		Scene scene = new Scene(root, 800, 800);
 		scene.setFill(Color.GRAY);
@@ -132,7 +118,8 @@ public class sweeperofMines extends Application
 		
 		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
-		grid.setTranslateY((scene.getWidth()/2)/2);
+  		grid.setTranslateY((scene.getWidth()/2)/2);
+ 
 		
 		stage.show();
 		
@@ -143,9 +130,9 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-/*	public void placeBombs(Button[][] b)
+	public void placeBombs(Button[][] b)
 	{
 		
-	} */
+	} 
 	
 }
