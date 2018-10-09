@@ -3,7 +3,6 @@ package School;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -28,9 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
+import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 import java.beans.EventHandler;
 import java.io.*;
@@ -41,12 +38,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -59,29 +54,50 @@ public class sweeperofMines extends Application
 	@Override
 	public void start(Stage stage) throws IOException
 	{
-		ImageView flagView = new ImageView("C:\\Users\\khscs091\\flag.png");
-		flagView.setPickOnBounds(true);
+		Image one = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\1.png"));
+		ImageView oneView = new ImageView(one);
 		
-		ImageView empty = new ImageView("");
-		ImageView covered = new ImageView("");
-		ImageView bomb = new ImageView("");
+		Image two = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\2.png"));
+		ImageView twoView = new ImageView(two);
+		
+		Image three = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\3.png"));
+		ImageView threeView = new ImageView(three);
+		
+		Image four = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\4.png"));
+		ImageView fourView = new ImageView(four);
+		
+		Image five = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\5.png"));
+		ImageView fiveView = new ImageView(five);
+		
+		
+		
+		Image empty = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\empty.png"));
+		ImageView emptyView = new ImageView(empty);
+		
+		Image covered = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\covered.png"));
+		ImageView coveredView = new ImageView(covered);
+		
+		Image bomb = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\bomb.png"));
+		ImageView bombView = new ImageView(bomb);
+		
+		Image flag = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\flag.png"));
+		ImageView flagView = new ImageView(flag);
 		
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
-		ImageView[][] gridButtons = new ImageView[16][16];
+		Button[][] gridButtons = new Button[16][16];
 		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				ImageView b1 = flagView;
+				Button b1 = new Button("   ");
 				
-				b1.setOnMouseClicked((MouseEvent e) -> 
+				b1.setOnAction(event -> 
 				{
-		            System.out.println("Clicked!");
+		            System.out.println(b1.getHeight()+" "+b1.getWidth());
 		        });
-				
 				
 				gridButtons[i][k] = b1;
 			}
@@ -109,17 +125,16 @@ public class sweeperofMines extends Application
 		minesLeft.setFocusTraversable(false);
 		minesLeft.setVisible(true);
 		
-		Group root = new Group();
+		
+		Group root = new Group(grid, minesLeft, oneView);
 		
 		Scene scene = new Scene(root, 800, 800);
 		scene.setFill(Color.GRAY);
 		stage.setTitle("Minesweeper");
 		stage.setScene(scene);
 		
-		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
-  		grid.setTranslateY((scene.getWidth()/2)/2);
- 
+		grid.setTranslateY((scene.getWidth()/2)/2);
 		
 		stage.show();
 		
@@ -130,9 +145,9 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-	public void placeBombs(Button[][] b)
+/*	public void placeBombs(Button[][] b)
 	{
 		
-	} 
+	} */
 	
 }
