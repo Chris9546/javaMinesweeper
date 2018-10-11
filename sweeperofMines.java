@@ -69,7 +69,7 @@ public class sweeperofMines extends Application
 		Image five = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\5.png"));
 		ImageView fiveView = new ImageView(five);
 		
-		
+		// Image Size is 30 x 30
 		
 		Image empty = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\empty.png"));
 		ImageView emptyView = new ImageView(empty);
@@ -86,20 +86,27 @@ public class sweeperofMines extends Application
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
-		Button[][] gridButtons = new Button[16][16];
+		ImageView[][] gridButtons = new ImageView[16][16];
+		int[] locationsX = new int[16];
+		int[] locationsY = new int[16];
 		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				Button b1 = new Button("   ");
+				ImageView i1 = new ImageView(covered);
 				
-				b1.setOnAction(event -> 
+				gridButtons[i][k] = i1;
+				locationsX[i] = i;
+				locationsY[k] = k;
+				
+				
+				
+				i1.setOnMouseClicked((event)->
 				{
-		            System.out.println(b1.getHeight()+" "+b1.getWidth());
-		        });
+					this = emptyView;
+				});
 				
-				gridButtons[i][k] = b1;
 			}
 		}
 		
