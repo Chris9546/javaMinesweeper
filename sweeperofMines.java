@@ -1,5 +1,6 @@
 package School;
 
+import School.cell;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -86,25 +87,20 @@ public class sweeperofMines extends Application
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
-		ImageView[][] gridButtons = new ImageView[16][16];
-		int[] locationsX = new int[16];
-		int[] locationsY = new int[16];
+		cell[][] gridButtons = new cell[16][16];
 		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				ImageView i1 = new ImageView(covered);
+				cell c = new cell(coveredView, i, k);
 				
-				gridButtons[i][k] = i1;
-				locationsX[i] = i;
-				locationsY[k] = k;
+				gridButtons[i][k] = c;
 				
-				
-				
-				i1.setOnMouseClicked((event)->
+				c.i.setOnMouseClicked((event)->
 				{
-					this = emptyView;
+					c.i = emptyView;
+					grid.add(gridButtons[i][k].i, gridButtons[i][k].x, gridButtons[i][k].y);
 				});
 				
 			}
@@ -114,12 +110,9 @@ public class sweeperofMines extends Application
 		{
 			for(int k = 0;k<16;k++)
 			{
-				grid.add(gridButtons[i][k], i, k);
+				grid.add(gridButtons[i][k].i, gridButtons[i][k].x, gridButtons[i][k].y);
 			}
 		}
-		
-		grid.setHgap(0);
-		grid.setVgap(0);
 		
 		TextField minesLeft = new TextField();
 		minesLeft.setTranslateX(200);
