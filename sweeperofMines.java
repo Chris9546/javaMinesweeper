@@ -55,6 +55,13 @@ public class sweeperofMines extends Application
 	@Override
 	public void start(Stage stage) throws IOException
 	{
+		// grid, minesLeft, oneView
+		Group root = new Group();
+		Scene scene = new Scene(root, 800, 800);
+		scene.setFill(Color.GRAY);
+		stage.setTitle("Minesweeper");
+		stage.setScene(scene);
+		
 		Image one = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\1.png"));
 		ImageView oneView = new ImageView(one);
 		
@@ -87,32 +94,43 @@ public class sweeperofMines extends Application
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
 		
-		cell[][] gridButtons = new cell[16][16];
+		ImageView[][] gridButtons = new ImageView[16][16];
+		
+		for(int a = 0;a<16;a++)
+		{
+			for(int b = 0;b<16;b++)
+			{
+				gridButtons[a][b] = null;
+			}
+		}
 		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				cell c = new cell(coveredView, i, k);
-				
-				gridButtons[i][k] = c;
-				
-				c.i.setOnMouseClicked((event)->
+				gridButtons[i][k] = coveredView;
+			}
+		}
+		
+		for(int i = 0;i<16;i++)
+		{
+			for(int k = 0;k<16;k++)
+			{
+				gridButtons[i][k].setOnMouseClicked((event)->
 				{
-					c.i = emptyView;
-					grid.add(gridButtons[i][k].i, gridButtons[i][k].x, gridButtons[i][k].y);
+					gridButtons[i][k] = emptyView;
 				});
 				
 			}
 		}
 		
-		for(int i = 0;i<16;i++)
+/*		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
 				grid.add(gridButtons[i][k].i, gridButtons[i][k].x, gridButtons[i][k].y);
 			}
-		}
+		} */
 		
 		TextField minesLeft = new TextField();
 		minesLeft.setTranslateX(200);
@@ -125,16 +143,11 @@ public class sweeperofMines extends Application
 		minesLeft.setFocusTraversable(false);
 		minesLeft.setVisible(true);
 		
-		
-		Group root = new Group(grid, minesLeft, oneView);
-		
-		Scene scene = new Scene(root, 800, 800);
-		scene.setFill(Color.GRAY);
-		stage.setTitle("Minesweeper");
-		stage.setScene(scene);
-		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
 		grid.setTranslateY((scene.getWidth()/2)/2);
+		
+		root.getChildren().add(grid);
+		root.getChildren().add(minesLeft);
 		
 		stage.show();
 		
