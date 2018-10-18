@@ -1,14 +1,10 @@
 package School;
 
 import School.cell;
-import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -96,41 +92,16 @@ public class sweeperofMines extends Application
 		
 		ImageView[][] gridButtons = new ImageView[16][16];
 		
-		for(int a = 0;a<16;a++)
-		{
-			for(int b = 0;b<16;b++)
-			{
-				gridButtons[a][b] = null;
-			}
-		}
-		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
 				gridButtons[i][k] = coveredView;
+				grid.getChildren().add(gridButtons[i][k]);
 			}
 		}
+			
 		
-		for(int i = 0;i<16;i++)
-		{
-			for(int k = 0;k<16;k++)
-			{
-				gridButtons[i][k].setOnMouseClicked((event)->
-				{
-					gridButtons[i][k] = emptyView;
-				});
-				
-			}
-		}
-		
-/*		for(int i = 0;i<16;i++)
-		{
-			for(int k = 0;k<16;k++)
-			{
-				grid.add(gridButtons[i][k].i, gridButtons[i][k].x, gridButtons[i][k].y);
-			}
-		} */
 		
 		TextField minesLeft = new TextField();
 		minesLeft.setTranslateX(200);
@@ -150,7 +121,6 @@ public class sweeperofMines extends Application
 		root.getChildren().add(minesLeft);
 		
 		stage.show();
-		
 	}
 	
 	public static void main(String args[]) throws IOException
@@ -158,9 +128,9 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-/*	public void placeBombs(Button[][] b)
+	public void placeBombs(Button[][] b)
 	{
 		
-	} */
+	} 
 	
 }
