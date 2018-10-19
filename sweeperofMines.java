@@ -128,9 +128,15 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-	public void placeBombs(Button[][] b)
+	public void placeBombs(ImageView[][] x)
 	{
-		
-	} 
+		for(int rows = 0;rows<40;rows++)
+		{
+			if(rows)
+			{
+				
+			}
+		}
+	}
 	
 }
