@@ -1,50 +1,18 @@
 package School;
 
-import School.cell;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import javafx.scene.text.Text;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.Math;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.image.Image;
-import java.awt.image.BufferedImage;
-import java.beans.EventHandler;
 import java.io.*;
-import java.util.*;
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import java.util.Random;
 
 public class sweeperofMines extends Application
 {
@@ -58,34 +26,13 @@ public class sweeperofMines extends Application
 		stage.setTitle("Minesweeper");
 		stage.setScene(scene);
 		
-		Image one = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\1.png"));
-		ImageView oneView = new ImageView(one);
-		
-		Image two = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\2.png"));
-		ImageView twoView = new ImageView(two);
-		
-		Image three = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\3.png"));
-		ImageView threeView = new ImageView(three);
-		
-		Image four = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\4.png"));
-		ImageView fourView = new ImageView(four);
-		
-		Image five = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\5.png"));
-		ImageView fiveView = new ImageView(five);
-		
 		// Image Size is 30 x 30
 		
 		Image empty = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\empty.png"));
-		ImageView emptyView = new ImageView(empty);
 		
 		Image covered = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\covered.png"));
-		ImageView coveredView = new ImageView(covered);
 		
 		Image bomb = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\bomb.png"));
-		ImageView bombView = new ImageView(bomb);
-		
-		Image flag = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\flag.png"));
-		ImageView flagView = new ImageView(flag);
 		
 		Scanner sc = new Scanner("System.in");
 		GridPane grid = new GridPane();
@@ -96,12 +43,18 @@ public class sweeperofMines extends Application
 		{
 			for(int k = 0;k<16;k++)
 			{
+				ImageView coveredView = new ImageView(covered);
+				ImageView emptyView = new ImageView(empty);
+				
+				coveredView.setOnMouseClicked((event)->
+				{
+		            
+		        });
+				
 				gridButtons[i][k] = coveredView;
-				grid.getChildren().add(gridButtons[i][k]);
+				grid.add(gridButtons[i][k], i, k);
 			}
 		}
-			
-		
 		
 		TextField minesLeft = new TextField();
 		minesLeft.setTranslateX(200);
@@ -128,15 +81,56 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-	public void placeBombs(ImageView[][] x)
+	public int[][] placeBombs()
 	{
-		for(int rows = 0;rows<40;rows++)
+		int[][] bombs = new int[16][16];		
+		for(int rows = 0;rows<16;rows++)
 		{
-			if(rows)
+			if(rows % 2 == 0)
 			{
+				Random a = new Random();
+				Random b = new Random();
 				
+				int first = a.nextInt(16);
+				int second = b.nextInt(16);
+				
+				bombs[rows][first] = 1;
+				bombs[rows][second] = 1;
+			}
+			if(rows % 2 == 1)
+			{
+				Random a = new Random();
+				Random b = new Random();
+				Random c = new Random();
+				
+				int first = a.nextInt(16);
+				int second = b.nextInt(16);
+				int third = c.nextInt(16);
+				
+				bombs[rows][first] = 1;
+				bombs[rows][second] = 1;
+				bombs[rows][third] = 1;
 			}
 		}
+		
+		for(int rows = 0;rows<16;rows++)
+		{
+			for(int collums = 0;collums<16;collums++)
+			{
+				if(bombs[rows][collums] != 1)
+				{
+					bombs[rows][collums] = 0;
+				}
+			}
+		}
+		return bombs;
+		
 	}
 	
+	
+	// 8 Cells to check
+/*	public boolean checkforBombs()
+	{
+		
+	} */
 }
