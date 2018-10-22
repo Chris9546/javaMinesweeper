@@ -67,6 +67,22 @@ public class sweeperofMines extends Application
 		minesLeft.setFocusTraversable(false);
 		minesLeft.setVisible(true);
 		
+		int temp = 0;
+		int[][] bombs = new int[16][16];
+		bombs = placeBombs(false);
+		for(int i = 0;i<16;i++)
+		{
+			for(int k = 0;k<16;k++)
+			{
+				if(bombs[i][k] == 1)
+				{
+					temp+=1;
+				}
+			}
+		}
+		
+		System.out.println(temp);
+		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
 		grid.setTranslateY((scene.getWidth()/2)/2);
 		
@@ -81,50 +97,94 @@ public class sweeperofMines extends Application
 		launch(args);
 	}
 	
-	public int[][] placeBombs()
+	public static int[][] placeBombs(boolean x)
 	{
 		int[][] bombs = new int[16][16];		
-		for(int rows = 0;rows<16;rows++)
+		if(x == false)
 		{
-			if(rows % 2 == 0)
+			for(int rows = 0;rows<16;rows++)
 			{
-				Random a = new Random();
-				Random b = new Random();
-				
-				int first = a.nextInt(16);
-				int second = b.nextInt(16);
-				
-				bombs[rows][first] = 1;
-				bombs[rows][second] = 1;
+				if(rows % 2 == 0)
+				{
+					Random a = new Random();
+					Random b = new Random();
+					
+					int first = a.nextInt(16);
+					int second = b.nextInt(16);
+					
+					bombs[rows][first] = 1;
+					bombs[rows][second] = 1;
+				}
+				if(rows % 2 == 1)
+				{
+					Random a = new Random();
+					Random b = new Random();
+					Random c = new Random();
+					
+					int first = a.nextInt(16);
+					int second = b.nextInt(16);
+					int third = c.nextInt(16);
+					
+					bombs[rows][first] = 1;
+					bombs[rows][second] = 1;
+					bombs[rows][third] = 1;
+				}
 			}
-			if(rows % 2 == 1)
+			
+			for(int rows = 0;rows<16;rows++)
 			{
-				Random a = new Random();
-				Random b = new Random();
-				Random c = new Random();
-				
-				int first = a.nextInt(16);
-				int second = b.nextInt(16);
-				int third = c.nextInt(16);
-				
-				bombs[rows][first] = 1;
-				bombs[rows][second] = 1;
-				bombs[rows][third] = 1;
+				for(int collums = 0;collums<16;collums++)
+				{
+					if(bombs[rows][collums] != 1)
+					{
+						bombs[rows][collums] = 0;
+					}
+				}
 			}
 		}
-		
-		for(int rows = 0;rows<16;rows++)
+		else
 		{
-			for(int collums = 0;collums<16;collums++)
+			int core = 2;
+			int count = 0;
+			for(int i = 0;i<16;i++)
 			{
-				if(bombs[rows][collums] != 1)
+				if(i % 2 == 0)
 				{
-					bombs[rows][collums] = 0;
+					core = 2;
+				}
+
+				if(i % 2 == 1)
+				{
+					core = 3;
+				}
+				
+				for(int k = 0;k<16;k++)
+				{
+					if(bombs[i][k] == 1)
+					{
+						count += 1;
+					}
+				}
+				
+				if(core == 2 && count != core)
+				{
+					int a = core-count;
+					for(int i = 0;i<a;i++)
+					{
+						
+					}
+				}
+				if(core == 3 && count != core)
+				{
+					int a = core-count;
+					for()
+					{
+						
+					}
 				}
 			}
 		}
 		return bombs;
-		
 	}
 	
 	
