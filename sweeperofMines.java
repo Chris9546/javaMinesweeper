@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import java.util.Random;
+import School.cell;
 
 public class sweeperofMines extends Application
 {
@@ -69,7 +70,7 @@ public class sweeperofMines extends Application
 		
 		int temp = 0;
 		int[][] bombs = new int[16][16];
-		bombs = placeBombs(false);
+		bombs = placeBombs();
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
@@ -96,101 +97,4 @@ public class sweeperofMines extends Application
 	{
 		launch(args);
 	}
-	
-	public static int[][] placeBombs(boolean x)
-	{
-		int[][] bombs = new int[16][16];		
-		if(x == false)
-		{
-			for(int rows = 0;rows<16;rows++)
-			{
-				if(rows % 2 == 0)
-				{
-					Random a = new Random();
-					Random b = new Random();
-					
-					int first = a.nextInt(16);
-					int second = b.nextInt(16);
-					
-					bombs[rows][first] = 1;
-					bombs[rows][second] = 1;
-				}
-				if(rows % 2 == 1)
-				{
-					Random a = new Random();
-					Random b = new Random();
-					Random c = new Random();
-					
-					int first = a.nextInt(16);
-					int second = b.nextInt(16);
-					int third = c.nextInt(16);
-					
-					bombs[rows][first] = 1;
-					bombs[rows][second] = 1;
-					bombs[rows][third] = 1;
-				}
-			}
-			
-			for(int rows = 0;rows<16;rows++)
-			{
-				for(int collums = 0;collums<16;collums++)
-				{
-					if(bombs[rows][collums] != 1)
-					{
-						bombs[rows][collums] = 0;
-					}
-				}
-			}
-		}
-		else
-		{
-			int core = 2;
-			int count = 0;
-			for(int i = 0;i<16;i++)
-			{
-				if(i % 2 == 0)
-				{
-					core = 2;
-				}
-
-				if(i % 2 == 1)
-				{
-					core = 3;
-				}
-				
-				for(int k = 0;k<16;k++)
-				{
-					if(bombs[i][k] == 1)
-					{
-						count += 1;
-					}
-				}
-				
-				if(core == 2 && count != core)
-				{
-					int a = core-count;
-					for(int i = 0;i<a;i++)
-					{
-						
-					}
-				}
-				if(core == 3 && count != core)
-				{
-					int a = core-count;
-					for()
-					{
-						
-					}
-				}
-			}
-		}
-		return bombs;
-	}
-	
-	
-	// 8 Cells to check
-/*	public boolean checkforBombs()
-	{
-		
-	} */
 }
