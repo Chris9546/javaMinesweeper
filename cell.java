@@ -47,29 +47,76 @@ public class cell
 		}
 	}
 	
-	public static cell[][] placeNumbers(cell[][] g, int[][] b)
+	public static int[][] placeNumbers(cell[][] g, int[][] b)
 	{
+		ArrayList<Integer>x = new ArrayList<Integer>(); 
+		ArrayList<Integer>y = new ArrayList<Integer>();
+		
+		x.add(-1);
+		x.add(0);
+		x.add(1);
+		x.add(-1);
+		x.add(1);
+		x.add(-1);
+		x.add(0);
+		x.add(1);
+		
+		y.add(-1);
+		y.add(-1);
+		y.add(-1);
+		y.add(0);
+		y.add(0);
+		y.add(1);
+		y.add(1);
+		y.add(1);
+		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				if(b[i][k] == 0)
-				{
-					
-				}
+				int count = 0;
+				count = countBombs(b, g[i][k], count, x, y);
+				b[i][k] = count;
 			}
 		}
-	}
+		return b;
+	} 
 	
-	public static int countBombs(cell[][] g, int[][]b, cell c, int count)
+	public static int countBombs(int[][]b, cell c, int count, ArrayList<Integer>x, ArrayList<Integer>y)
 	{
-		int count = 0;
-		if(b[c.x-1] [c.y+1] == 1)
+		x.add(-1);
+		x.add(0);
+		x.add(1);
+		x.add(-1);
+		x.add(1);
+		x.add(-1);
+		x.add(0);
+		x.add(1);
+		
+		y.add(-1);
+		y.add(-1);
+		y.add(-1);
+		y.add(0);
+		y.add(0);
+		y.add(1);
+		y.add(1);
+		y.add(1);
+		
+		for(int i = 0;i<1;i++)
 		{
-			count += 1;
-			
+			if(b[c.x+x.get(i)] [c.y+y.get(i)] == 1)
+			{
+				x.remove(i);
+				y.remove(i);
+				return countBombs(b, c, count+=1, x, y);
+			}
 		}
 		
+		if(x.size() == 0)
+		{
+			return count;
+		}
+		return count; 
 	}
 	
 	// 8 Cells to check 

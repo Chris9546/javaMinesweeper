@@ -77,11 +77,13 @@ public class sweeperofMines extends Application
 		int temp = 0;
 		cell[] bombs = new cell[16];
 		
-//		bombs = placeBombs();
+		bombs = placeBombs();
 		
-//		int[][] bombsInt = new int[16][16];
+		int[][] bombsInt = new int[16][16];
 		
-//		bombsInt = placeBombsInt(bombs);
+		bombsInt = placeBombsInt(bombs);
+		
+		bombsInt = placeNumbers();
 		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
 		grid.setTranslateY((scene.getWidth()/2)/2);
