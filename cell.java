@@ -11,7 +11,8 @@ public class cell
 	boolean isBomb;
 	int x;
 	int y;
-
+	cell [] bombList;
+	
 	public cell()
 	{
 		i = null;
@@ -26,6 +27,15 @@ public class cell
 		isBomb = isB;
 		x = a;
 		y = b;
+
+	}
+	
+	public cell(cell c)
+	{
+		i = c.i;
+		isBomb = c.isBomb;
+		x = c.x;
+		y = c.y;
 	}
 	
 	public cell(boolean isB, int a, int b)
@@ -47,78 +57,161 @@ public class cell
 		}
 	}
 	
-	public static int[][] placeNumbers(cell[][] g, int[][] b)
+	public static int[][] placeNumber(cell[][] g, int[][] b, cell[] bombs)
 	{
-		ArrayList<Integer>x = new ArrayList<Integer>(); 
-		ArrayList<Integer>y = new ArrayList<Integer>();
-		
-		x.add(-1);
-		x.add(0);
-		x.add(1);
-		x.add(-1);
-		x.add(1);
-		x.add(-1);
-		x.add(0);
-		x.add(1);
-		
-		y.add(-1);
-		y.add(-1);
-		y.add(-1);
-		y.add(0);
-		y.add(0);
-		y.add(1);
-		y.add(1);
-		y.add(1);
-		
 		for(int i = 0;i<16;i++)
 		{
 			for(int k = 0;k<16;k++)
 			{
-				int count = 0;
-				count = countBombs(b, g[i][k], count, x, y);
-				b[i][k] = count;
+				if(b[i][k] == 0)
+				{
+					b[i][k] = g[i][k].countBombs(bombs);
+				}
 			}
 		}
+		
 		return b;
-	} 
-	
-	public static int countBombs(int[][]b, cell c, int count, ArrayList<Integer>x, ArrayList<Integer>y)
-	{
-		x.add(-1);
-		x.add(0);
-		x.add(1);
-		x.add(-1);
-		x.add(1);
-		x.add(-1);
-		x.add(0);
-		x.add(1);
-		
-		y.add(-1);
-		y.add(-1);
-		y.add(-1);
-		y.add(0);
-		y.add(0);
-		y.add(1);
-		y.add(1);
-		y.add(1);
-		
-		for(int i = 0;i<1;i++)
-		{
-			if(b[c.x+x.get(i)] [c.y+y.get(i)] == 1)
-			{
-				x.remove(i);
-				y.remove(i);
-				return countBombs(b, c, count+=1, x, y);
-			}
-		}
-		
-		if(x.size() == 0)
-		{
-			return count;
-		}
-		return count; 
 	}
 	
-	// 8 Cells to check 
+	public int countBombs(cell[] bombs)
+	{
+		int count = 0;
+		
+		int startX = -1;
+		int startY = -1;
+		int endX = 1;
+		int endY = 1;
+		
+		if(x == 0)
+		{
+			startX = 0;
+		}
+								
+		if(y == 15)
+		{
+			endY = 0;
+		}
+		
+		if(x == 15)
+		{
+			endX = 0;
+		}
+		
+		if(y == 0)
+		{
+			startY = 0;
+			
+		}
+		
+		
+		
+		
+		for(int i = startX;i<=endX;i++)
+		{
+			for(int k = startY;k<=endY;k++)
+			{
+				if(i == 0 && k == 0)
+				{
+					for(int j = 0;j<bombs.length;j++)
+					{						
+						if(this.equalTo(bombs[j]) == true)
+						{
+							return -1;
+						}
+						
+					}
+				}
+				else
+				{
+					cell unknownBmb = new cell(false, i+x, k+y);
+					for(int j = 0;j<bombs.length;j++)
+					{						
+						if(unknownBmb.equalTo(bombs[j]) == true)
+						{
+							count += 1;
+						}
+						
+					}					
+					
 
+				}
+			}
+		}
+		
+		return count;
+	}
+	
+	public static cell[] placeBombs()
+	{
+		cell[] bombs = new cell[40];
+		ArrayList<cell> bombList = new <cell>ArrayList();
+		
+		Random startX = new Random();
+		Random startY = new Random();
+		
+		int x = startX.nextInt(16);
+		int y = startY.nextInt(16);
+		
+		cell start = new cell(true, x, y);
+		
+		bombList.add(start);
+		
+		while(bombList.size() < 40)
+		{
+			Random r1 = new Random();
+			Random r2 = new Random();
+			
+			int a = r1.nextInt(16);
+			int b = r2.nextInt(16);
+			
+			cell c = new cell(true, a, b);
+			
+			int count = 0;
+			
+			for(int i = 0;i<bombList.size();i++)
+			{
+				if(c.equalTo(bombList.get(i)) == true)
+				{
+					break;
+				}
+				
+				if(c.equalTo(bombList.get(i)) == false)
+				{
+					count += 1;
+				}
+				
+				if(count == bombList.size())
+				{
+					bombList.add(c);
+					break;
+				}
+			}
+		}
+		
+		for(int i = 0;i<40;i++)
+		{
+			bombs[i] = bombList.get(i);
+		}
+		
+		return bombs;
+	}
+	
+	public static int[][] placeBombsInt(cell[] c)
+	{
+		int[][] bombsInt = new int[16][16];
+		
+		for(int i = 0;i<40;i++)
+		{
+			if(c[i] != null)
+			{
+				bombsInt[c[i].x][c[i].y] = 9;
+			}
+			else
+			{
+				bombsInt[c[i].x][c[i].y] = 0;
+			}
+		}
+		
+		return bombsInt;
+	}
 }

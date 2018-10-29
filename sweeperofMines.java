@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import java.io.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -37,53 +39,133 @@ public class sweeperofMines extends Application
 		
 		Image bomb = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\bomb.png"));
 		
-		Scanner sc = new Scanner("System.in");
-		GridPane grid = new GridPane();
-		cell[][] squareGrid = new cell[16][16];
+		Image flag = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\flag.png"));
 		
-		ImageView[][] gridButtons = new ImageView[16][16];
+		Image one = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\1.png"));
 		
+		Image two = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\2.png"));
 		
-		for(int i = 0;i<16;i++)
-		{
-			for(int k = 0;k<16;k++)
-			{
-				ImageView coveredView = new ImageView(covered);
-				ImageView emptyView = new ImageView(empty);
-				
-				cell c = new cell(false, i, k, coveredView);
-				
-				c.i.setOnMouseClicked((event)->
-				{
-		            c.i.setImage(empty);
-		        });
-				
-				squareGrid[i][k] = c;
-				grid.add(squareGrid[i][k].i, i, k);
-			}
-		}
+		Image three = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\3.png"));
+		
+		Image four = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\4.png"));
+		
+		Image five = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\5.png"));
+		
+		Image six = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\6.png"));
+		
+		Image seven = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\7.png"));
+		
+		Image eight = new Image(new FileInputStream("C:\\Users\\khscs091\\eclipse-workspace\\School\\8.png"));
 		
 		TextField minesLeft = new TextField();
 		minesLeft.setTranslateX(200);
 		minesLeft.setTranslateY(50);
 		minesLeft.setText("10");
-		minesLeft.setPrefWidth(30.0f);
+		minesLeft.setPrefWidth(35.0f);
 		minesLeft.setStyle("-fx-border-color: black;");
 		minesLeft.setEditable(false);
 		minesLeft.setMouseTransparent(true);
 		minesLeft.setFocusTraversable(false);
 		minesLeft.setVisible(true);
 		
-		int temp = 0;
-		cell[] bombs = new cell[16];
+		GridPane grid = new GridPane();
+		cell[][] squareGrid = new cell[16][16];
+		cell[] bombs = new cell[40];
+		boolean [] gameDone = new boolean[1];
+		gameDone[0] = false;
 		
-		bombs = placeBombs();
-		
-		int[][] bombsInt = new int[16][16];
-		
-		bombsInt = placeBombsInt(bombs);
-		
-		bombsInt = placeNumbers();
+		for(int i = 0;i<16;i++)
+		{
+			for(int k = 0;k<16;k++)
+			{
+				ImageView coveredView = new ImageView(covered);
+				
+				cell c = new cell(false, i, k, coveredView);
+				
+				c.i.setOnMouseClicked((event)->
+				{
+					MouseButton button = event.getButton();
+					
+					if(gameDone[0] == true)
+					{
+						return;
+					}
+					
+					int x = c.x;
+					int y = c.y;
+					
+					if(button == MouseButton.SECONDARY)
+					{
+						c.i.setImage(flag);
+						return;
+					}
+					
+					if(bombs[0] == null)
+					{
+						final cell[] b = cell.placeBombs();
+						for(int m=0; m<bombs.length;m++)
+						{
+							bombs[m] = b[m];
+						}
+					}
+					
+					
+					
+					cell clicked = new cell(false,x,y);
+					
+					int bombsAround = clicked.countBombs(bombs);				
+					
+					switch(bombsAround)
+					{
+					case -1:
+						c.i.setImage(bomb);
+						gameDone[0] = true;
+						break;
+					case 0:
+						for(int a = 16-c.x;a<16;a++)
+						{
+							for(int b = 16-c.y;b<16;b++)
+							{
+								if(squareGrid[a][b].countBombs(bombs) == 0)
+								{
+									squareGrid[a][b].i.setImage(empty);
+								}
+							}
+						}
+						
+						break;
+					case 1:
+						c.i.setImage(one);
+						break;
+					case 2:
+						c.i.setImage(two);
+						break;
+					case 3:
+						c.i.setImage(three);
+						break;
+					case 4:
+						c.i.setImage(four);
+						break;
+					case 5:
+						c.i.setImage(five);
+						break;
+					case 6:
+						c.i.setImage(six);
+						break;
+					case 7:
+						c.i.setImage(seven);
+						break;
+					case 8:
+						c.i.setImage(eight);
+						break;
+					}
+					
+		        });
+										
+				squareGrid[i][k] = c;
+				grid.add(squareGrid[i][k].i, i, k);
+			}
+		}
 		
 		grid.setTranslateX((scene.getHeight()/2)/2-10);
 		grid.setTranslateY((scene.getWidth()/2)/2);
@@ -97,93 +179,5 @@ public class sweeperofMines extends Application
 	public static void main(String args[]) throws IOException
 	{
 		launch(args);
-	}
-	
-	public static cell[] placeBombs()
-	{
-		cell[] bombs = new cell[40];
-		ArrayList<cell> bombList = new <cell>ArrayList();
-		
-		Random startX = new Random();
-		Random startY = new Random();
-		
-		int x = startX.nextInt(16);
-		int y = startY.nextInt(16);
-		
-		cell start = new cell(true, x, y);
-		
-		bombList.add(start);
-		
-		while(bombList.size() < 40)
-		{
-			Random r1 = new Random();
-			Random r2 = new Random();
-			
-			int a = r1.nextInt(16);
-			int b = r2.nextInt(16);
-			
-			cell c = new cell(true, a, b);
-			
-			int count = 0;
-			
-			for(int i = 0;i<=bombList.size();i++)
-			{
-				if(c.equalTo(bombList.get(i)))
-				{
-					break;
-				}
-				
-				if(c.equalTo(bombList.get(i)) == false)
-				{
-					count += 1;
-				}
-				
-				if(count == bombList.size())
-				{
-					bombList.add(c);
-					break;
-				}
-			}
-		}
-		
-		for(int i = 0;i<40;i++)
-		{
-			bombs[i] = bombList.get(i);
-		}
-		
-		return bombs;
-	}
-	
-	public static int[][] placeBombsInt(cell[] c)
-	{
-		int[][] bombsInt = new int[16][16];
-		
-		for(int i = 0;i<40;i++)
-		{
-			if(c[i] != null)
-			{
-				bombsInt[c[i].x][c[i].y] = 1;
-			}
-			else
-			{
-				bombsInt[c[i].x][c[i].y] = 0;
-			}
-		}
-		
-		return bombsInt;
-	}
-	
-	public static boolean checkforBombs(cell[][] g, cell c, boolean firstClick)
-	{
-		ArrayList<Boolean> results = new ArrayList<Boolean>();
-		
-		int x = c.x;
-		int y = c.y;
-		
-		if(g[x][y].isBomb == false)
-		{
-			
-		}
-		
 	}
 }
